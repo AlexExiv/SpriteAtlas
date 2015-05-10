@@ -1,0 +1,35 @@
+[SETTINGS]
+COMPRESS RLE
+JPEG_QUALITY 99
+MAX_WIDTH 256		
+PACK YES
+WORKDIRECTORY "demo\"
+
+
+[ANIMATIONS]
+WALK 0 - 5 LOOP	    	
+SIT 5 - 8
+WAIT 0
+
+
+[FRAMES]
+"frame0.bmp"		
+"frame1.bmp" 0 0 128 128 64 64
+"frame2.bmp" 0 0 128 128 64 64
+"frame3.bmp" 0 0 81 87 32 32
+"frame4.bmp" 0 0 81 87 32 32
+"frame5.bmp" 0 0 81 87 32 32	
+"frame6.bmp" 0 0 256 256 128 128 
+"frame7.bmp" 0 0 256 256 128 128 
+"frame8.bmp" 0 0 256 256 128 128 			
+"frame9.bmp" 0 0 256 256 128 128 
+
+[ADDITIONALS]
+LOX "go to five"
+SPEED 2.5
+LENGTH 100
+
+
+
+
+

@@ -1,0 +1,40 @@
+[SETTINGS]
+COMPRESS JPEG
+JPEG_QUALITY 99
+MAX_WIDTH 512		
+PACK NO
+WORKDIRECTORY "cellback\"
+BRIGHT_MIN 75
+
+
+[ANIMATIONS]
+WAIT 0
+SELECTED 1
+HIDDEN 11
+DYING 2-10
+
+
+[FRAMES]	
+"cellback1.bmp" 0 0 128 128 71 71
+"cellback2.bmp" 0 0 128 128 71 71
+"cellback3.bmp" 0 0 128 128 71 71
+"cellback4.bmp" 0 0 128 128 71 71
+"cellback5.bmp" 0 0 128 128 71 71
+"cellback6.bmp" 0 0 128 128 71 71
+"cellback7.bmp" 0 0 128 128 71 71
+"cellback8.bmp" 0 0 128 128 71 71
+"cellback9.bmp" 0 0 128 128 71 71
+"cellback10.bmp" 0 0 128 128 71 71
+"cellback11.bmp" 0 0 128 128 71 71
+"cellback12.bmp" 0 0 128 128 71 71
+
+
+
+[ADDITIONALS]
+WIDTH 71
+HEIGHT 71
+
+
+
+
+
