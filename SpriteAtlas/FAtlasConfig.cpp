@@ -597,6 +597,15 @@ UI32 FAtlasConfig::ParseFrames( CHAR_ * lpStr )
 			iParams[4] = 0;
 			iParams[5] = 0;
 		}
+		if( i == 2 )
+		{
+			iParams[4] = iParams[0];
+			iParams[5] = iParams[1];
+			iParams[0] = 0;
+			iParams[1] = 0;
+			iParams[2] = 0;
+			iParams[3] = 0;
+		}
 		else if( i == 4 )
 		{
 			iParams[4] = iParams[2];

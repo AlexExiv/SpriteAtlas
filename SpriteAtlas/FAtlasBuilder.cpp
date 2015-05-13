@@ -133,13 +133,18 @@ UI32 FAtlasBuilder::BuildAtlas( const FString & sFileName0 )
 		FFrameParams fFrameParams;
 		lpAtlasCfg->GetFrameParams( i, fFrameParams );
 		FFrame * lpFrame = new FFrame( sWorkDir + fFrameParams.sFileName, fFrameParams.x, fFrameParams.y, fFrameParams.iWidth, fFrameParams.iHeight, fFrameParams.iScaleW, fFrameParams.iScaleH, i, lpAtlasCfg );
+		if( !lpFrame->IsLoaded() )
+		{
+			delete lpFrame;
+			continue;
+		}
 		lFrameList.PushBack( lpFrame );
 	}
 
 	I32 iMaxWidth;
 	lpAtlasCfg->GetFieldValueInt( FAtlasConfig::FIELD_MAXWIDTH, iMaxWidth );
 	FFrameIterator iIt = lFrameList.Begin();
-	UI32 iSquare = 0;
+	UI32 iSquare = 0, iMaxHeight = 0;
 	for(;iIt != lFrameList.End();iIt++ )
 	{
 		if( (*iIt)->GetWidth() > iMaxWidth )
@@ -149,9 +154,15 @@ UI32 FAtlasBuilder::BuildAtlas( const FString & sFileName0 )
 		}
 
 		iSquare += (*iIt)->GetWidth()*(*iIt)->GetHeight();
+		iHeight = max( (*iIt)->GetHeight(), iHeight );
 	}
+	I32 iBorderW = 0;
+	lpAtlasCfg->GetFieldValueInt( FAtlasConfig::FIELD_BORDERWIDTH, iBorderW );
 
 	UI32 iEstHeight = iSquare/iMaxWidth;
+	if( iEstHeight < (iMaxHeight + iBorderW) )
+		iEstHeight = iMaxHeight + iBorderW;
+
 	ReallocData( iMaxWidth, iEstHeight );
 
 	FHeightElem ** lpHeightElem = (FHeightElem **)FStack::GetInstanceStack()->PushBlock( lFrameList.GetCount()*sizeof( FHeightElem * ) );
@@ -164,8 +175,6 @@ UI32 FAtlasBuilder::BuildAtlas( const FString & sFileName0 )
 	UI32 x = 0;
 	UI32 * iStartY = (UI32 *)FStack::GetInstanceStack()->PushBlock( iMaxWidth*sizeof( UI32 ) );//сюда будем писать макс высоту по х чтобы начинать вставлять данные отсюда
 	memset( iStartY, 0, sizeof( UI32 )*iMaxWidth );
-	I32 iBorderW = 0;
-	lpAtlasCfg->GetFieldValueInt( FAtlasConfig::FIELD_BORDERWIDTH, iBorderW );
 
 	//Рисуем все кадры в одну текстуру: рисуем группы в порядке понижения высоты
 	for( UI32 i = 0;i < iElemCount;i++ )
@@ -210,7 +219,7 @@ UI32 FAtlasBuilder::BuildAtlas( const FString & sFileName0 )
 			}
 
 			lpFrame->WriteToDataRGBA( lpAtlasData, x, iStartY[x], iMaxWidth, iHeight );
-			for( UI32 k = x;k < (x + lpFrame->GetHeight());k++ )
+			for( UI32 k = x;k < (x + lpFrame->GetWidth());k++ )
 				iStartY[k] += (lpFrame->GetHeight() + iBorderW);
 
 			lpFrame->SetWrited( true );

@@ -10,15 +10,23 @@
 
 
 FFrame::FFrame( const FString & sName, UI32 x, UI32 y, UI32 iSrcWidth, UI32 iSrcHeight, UI32 iDstWidth, UI32 iDstHeight, UI32 iIndex, FAtlasConfig * lpAtlasCfg ) : lpData( NULL ), iWidth( iDstWidth ), iHeight( iDstHeight )
-	, lpFrameName( NULL ), iIndex( iIndex ), bWrited( false ), x( 0 ), y( 0 ), u0( 0.f ), v0( 0.f ), u1( 0.f ), v1( 0.f ), lpAtlasCfg( lpAtlasCfg )
+	, lpFrameName( NULL ), iIndex( iIndex ), bWrited( false ), x( 0 ), y( 0 ), u0( 0.f ), v0( 0.f ), u1( 0.f ), v1( 0.f ), 
+	lpAtlasCfg( lpAtlasCfg ), bLoaded( true )
 {
 	FImageResource * lpRes = (FImageResource *)FResourceManager::SharedManager()->CreateResource( sName );
 	if( !lpRes )
 	{
+		PUT_ERROR( "Can't find iamge resource with name: %s", sName.GetChar() );
+		bLoaded = false;
 		return;
 	}
 
-	if( iSrcWidth == 0 && iSrcHeight == 0 && iDstWidth == 0 && iDstHeight == 0 )//если все параметры равны нулю значит берется все изображение полностью в качестве кадра
+	if( x == 0 && y == 0 && iSrcWidth == 0 && iSrcHeight == 0 && iDstWidth != 0 && iDstHeight != 0 )
+	{
+		iSrcWidth = lpRes->GetWidth();
+		iSrcHeight = lpRes->GetHeight();
+	}
+	else if( iSrcWidth == 0 && iSrcHeight == 0 && iDstWidth == 0 && iDstHeight == 0 )//если все параметры равны нулю значит берется все изображение полностью в качестве кадра
 	{
 		iDstWidth = lpRes->GetWidth();
 		iDstHeight = lpRes->GetHeight();
@@ -61,7 +69,7 @@ FFrame::FFrame( const FString & sName, UI32 x, UI32 y, UI32 iSrcWidth, UI32 iSrc
 			}
 			else if( sAlpha == ATLAS_CONST_AUTO )
 			{
-				PUT_MESSAGE( "Alpha data not found generate alpha data" );
+				PUT_MESSAGE( "Alpha data for file \"%s\" not found generate alpha data", sName.GetChar() );
 			}
 		}
 		else
@@ -416,6 +424,12 @@ bool FFrame::IsWrited()const
 {
 	return bWrited;
 }
+
+bool FFrame::IsLoaded()const
+{
+	return bLoaded;
+}
+
 
 void FFrame::SetWrited( bool bWrited0 )
 {

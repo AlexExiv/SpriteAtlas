@@ -14,7 +14,7 @@ class FFrame
 	RGBA * lpData;
 	CHAR_ * lpFrameName;
 	UI32 iIndex;
-	bool bWrited;
+	bool bWrited, bLoaded;
 	FAtlasConfig * lpAtlasCfg;
 
 	void CalcAlpha( RGBA * lpData, UI32 iWidth, UI32 iHeight );
@@ -38,6 +38,7 @@ public:
 	UI32 GetIndex()const;
 	void GetParams( UI32 & x, UI32 & y, F32 & u0, F32 & v0, F32 & u1, F32 & v1 );
 	bool IsWrited()const;
+	bool IsLoaded()const;
 
 	void SetWrited( bool bWrited );
 };
