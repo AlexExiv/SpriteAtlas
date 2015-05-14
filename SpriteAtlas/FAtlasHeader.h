@@ -4,7 +4,7 @@
 
 #include "types.h"
 
-#define ATLAS_FILE_TYPE (((UI32)'a') | (((UI32)'s') << 8) || (((UI32)'f') << 16) || (((UI32)0) << 24))
+#define ATLAS_FILE_TYPE (((UI32)'a') | (((UI32)'s') << 8) | (((UI32)'f') << 16) | (((UI32)0) << 24))
 #define SPRITE_ATLAS_VER 1
 
 #define ATLAS_COMPR_NONE 1
