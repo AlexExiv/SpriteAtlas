@@ -141,7 +141,7 @@ void FPNGResource::Decode( void * lpData0, UI32 iDataLen )
 	lpData = FMalloc( iWidth*iHeight*iBpp );
 	png_bytep * lpRow = (png_bytep *)FStack::GetInstanceStack()->PushBlock( iHeight*sizeof( png_bytep * ) );
 	for( I32 i = 0;i < iHeight;i++ )
-		lpRow[iHeight - i - 1] = ((UI8 *)lpData) + i*iWidth*iBpp;
+		lpRow[i] = ((UI8 *)lpData) + i*iWidth*iBpp;
 	png_read_image( lpPng, lpRow );
 
 	FStack::GetInstanceStack()->PopBlock();

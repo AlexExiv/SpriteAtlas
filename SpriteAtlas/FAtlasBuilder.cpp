@@ -494,8 +494,8 @@ UI32 FAtlasBuilder::SaveAtlas()
 			break;
 		}
 
-		lpRGBName = FStringAllocator::GetAllocatorInst()->AllocateStr( sSaveFile + FString( "." ) + lpRGBRes->GetExt() );
-		lpAlphaName = FStringAllocator::GetAllocatorInst()->AllocateStr( sSaveFile +FString( "_a." ) + lpAlphaRes->GetExt() );
+		lpRGBName = FStringAllocator::GetAllocatorInst()->AllocateStr( sSaveFile.GetName() + FString( "." ) + lpRGBRes->GetExt() );
+		lpAlphaName = FStringAllocator::GetAllocatorInst()->AllocateStr( sSaveFile.GetName() +FString( "_a." ) + lpAlphaRes->GetExt() );
 
 		FResourceManager::SharedManager()->SaveResource( sSaveFile, lpRGBRes );
 		FResourceManager::SharedManager()->SaveResource( sSaveFile + FString( "_a" ), lpAlphaRes );
@@ -530,8 +530,8 @@ UI32 FAtlasBuilder::SaveAtlas()
 	if( lpAlphaName )
 	{
 		aHeader.iFlags |= ATLAS_ALPHA;
-		aHeader.iAtlasNameOff = iStrTableStart + FStringAllocator::GetAllocatorInst()->GetOffset( lpAlphaName );
-		aHeader.iAtlasNameLen = strlen( lpAlphaName );
+		aHeader.iAtlasAlphaNameOff = iStrTableStart + FStringAllocator::GetAllocatorInst()->GetOffset( lpAlphaName );
+		aHeader.iAtlasAlphaNameLen = strlen( lpAlphaName );
 	}
 
 	FFrameHeader * lpFrameHeaders = (FFrameHeader *)FStack::GetInstanceStack()->PushBlock( lpAtlasCfg->GetFrameCount()*iFrameHSize );
